@@ -81,8 +81,8 @@ onBeforeUnmount(() => audioElement.pause());
     <div class="hero__content">
       <div class="hero__kicker">{{ kicker }}</div>
 
-      <!-- <h1 class="hero__name">{{ groom }}</h1> -->
-      <!-- <div class="hero__amp">&amp;</div> -->
+      <!-- <h1 class="hero__name">{{ groom }}</h1>
+      <div class="hero__amp">&amp;</div> -->
       <h1 class="hero__name">{{ bride }}</h1>
 
       <div class="hero__date t-spaced">{{ prettyDate }}</div>

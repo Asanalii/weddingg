@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 
 const props = defineProps({
   title: { type: String, default: "Анкета" },
@@ -9,6 +9,10 @@ const props = defineProps({
   optionYes: { type: String, default: "Иә, әрине" },
   optionWithPartner: { type: String, default: "Жұбайыммен келемін" },
   optionNo: { type: String, default: "Келе алмаймын" },
+  aloneCheckbox: { type: String, default: "Жалғыз келмеймін" },
+  withMeLabel: { type: String, default: "Менімен бірге:" },
+  companionPlaceholder: { type: String, default: "Серіктесіңіздің аты" },
+  addGuestText: { type: String, default: "+ қонақ қосу" },
   buttonText: { type: String, default: "Жіберу" },
   sendingText: { type: String, default: "Жіберілуде…" },
   sentText: { type: String, default: "Рақмет! Жауабыңыз қабылданды ✓" },
@@ -19,9 +23,34 @@ const props = defineProps({
 
 const guestFullName = ref("");
 const attendance = ref("");
+const notAlone = ref(false);
+const companions = ref([""]);
 const isSubmitting = ref(false);
 const isSent = ref(false);
 const isError = ref(false);
+
+// Чекбокс «Жалғыз келмеймін» имеет смысл только если гость придёт
+const canBringGuests = computed(
+  () => attendance.value === "yes" || attendance.value === "with_partner",
+);
+
+// Если выбрали «Келе алмаймын» — прячем и сбрасываем спутников
+watch(attendance, () => {
+  if (!canBringGuests.value) {
+    notAlone.value = false;
+    companions.value = [""];
+  }
+});
+
+const addCompanion = () => companions.value.push("");
+const removeCompanion = (index) => {
+  companions.value.splice(index, 1);
+  if (companions.value.length === 0) companions.value = [""];
+};
+
+const companionNames = computed(() =>
+  companions.value.map((n) => n.trim()).filter(Boolean),
+);
 
 const canSubmit = computed(
   () => guestFullName.value.trim() && attendance.value,
@@ -51,9 +80,10 @@ const sendTelegram = async (data) => {
     "🎉 <b>Жаңа жауап / Новый ответ</b>",
     "",
     `👤 <b>Қонақ:</b> ${data.name}`,
+    data.partner ? `👥 <b>Бірге келеді:</b> ${data.partner}` : "",
     `✅ <b>Жауабы:</b> ${data.attendance}`,
     `${langFlag} <b>Тіл:</b> ${data.lang}`,
-  ];
+  ].filter(Boolean);
 
   const url = `https://api.telegram.org/bot${TG_TOKEN}/sendMessage`;
   try {
@@ -80,7 +110,8 @@ const submitForm = async () => {
 
   const payload = {
     name: guestFullName.value.trim(),
-    partner: "",
+    // Все спутники одной строкой — колонка «Имя партнёра» в таблице
+    partner: notAlone.value ? companionNames.value.join(", ") : "",
     attendance: attendanceText(),
     lang: props.lang,
   };
@@ -103,6 +134,8 @@ const submitForm = async () => {
     isSent.value = true;
     guestFullName.value = "";
     attendance.value = "";
+    notAlone.value = false;
+    companions.value = [""];
   } catch (err) {
     console.error("RSVP submit failed:", err);
     isError.value = true;
@@ -151,6 +184,52 @@ const submitForm = async () => {
         </label>
       </div>
 
+      <!-- «Жалғыз келмеймін» — только когда гость придёт -->
+      <template v-if="canBringGuests">
+        <label class="check">
+          <input type="checkbox" v-model="notAlone" />
+          <span class="check__box" aria-hidden="true">
+            <svg viewBox="0 0 12 10">
+              <path
+                d="M1 5.2 4.4 8.6 11 1.4"
+                fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+          <span class="check__text t-body">{{ aloneCheckbox }}</span>
+        </label>
+
+        <div v-if="notAlone" class="companions">
+          <div class="companions__label">{{ withMeLabel }}</div>
+
+          <div
+            v-for="(c, i) in companions"
+            :key="i"
+            class="companions__row"
+          >
+            <input
+              v-model="companions[i]"
+              class="rfield__input companions__input"
+              type="text"
+              :placeholder="companionPlaceholder"
+            />
+            <button
+              class="companions__remove"
+              type="button"
+              :aria-label="'remove ' + (i + 1)"
+              @click="removeCompanion(i)"
+            >
+              –
+            </button>
+          </div>
+
+          <button class="companions__add" type="button" @click="addCompanion">
+            {{ addGuestText }}
+          </button>
+        </div>
+      </template>
+
       <button class="rsvp__submit" type="submit" :disabled="!canSubmit || isSubmitting">
         {{ isSubmitting ? sendingText : buttonText }}
       </button>
@@ -185,6 +264,7 @@ const submitForm = async () => {
   font-family: var(--font-body);
   font-size: 18px;
   transition: border-color 0.2s;
+  min-width: 0;
 }
 .rfield__input::placeholder { color: var(--ink-mute); }
 .rfield__input:focus { border-color: var(--ink); }
@@ -225,6 +305,83 @@ const submitForm = async () => {
   background: var(--ink);
 }
 .radio__text { font-size: 18px; color: var(--ink); }
+
+/* Чекбокс «Жалғыз келмеймін» */
+.check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  margin-top: 2px;
+}
+.check input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.check__box {
+  width: 17px;
+  height: 17px;
+  border-radius: 4px;
+  border: 1px solid var(--ink-mute);
+  display: grid;
+  place-items: center;
+  color: transparent;
+  background: transparent;
+  transition: background 0.2s, border-color 0.2s;
+  flex: 0 0 auto;
+}
+.check__box svg { width: 11px; height: 9px; }
+.check input:checked + .check__box {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+.check__text { font-style: italic; font-size: 16px; color: var(--ink); }
+
+/* Спутники */
+.companions { display: grid; gap: 12px; }
+.companions__label {
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: lowercase;
+  font-variant: small-caps;
+  color: var(--ink-mute);
+}
+.companions__row {
+  display: grid;
+  grid-template-columns: 1fr 36px;
+  gap: 10px;
+  align-items: center;
+}
+.companions__remove {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--rule);
+  background: rgba(255, 255, 255, 0.4);
+  color: var(--ink-soft);
+  font-size: 18px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+.companions__remove:hover { background: #fff; border-color: var(--ink-mute); }
+.companions__add {
+  justify-self: start;
+  padding: 10px 18px;
+  border: 1px dashed var(--ink-mute);
+  border-radius: 6px;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  transition: background 0.2s, color 0.2s;
+}
+.companions__add:hover { background: rgba(255, 255, 255, 0.5); color: var(--ink); }
 
 .rsvp__submit {
   margin: 14px auto 0;

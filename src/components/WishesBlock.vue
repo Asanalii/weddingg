@@ -1,12 +1,15 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 const props = defineProps({
   title: { type: String, default: "Тілектер" },
   subtitle: { type: String, default: "Жас жұбайларға тілек қалдырыңыз." },
   openButton: { type: String, default: "Тілек қалдыру" },
-  nameLabel: { type: String, default: "Аты-жөніңіз" },
-  wishLabel: { type: String, default: "Сіздің тілегіңіз" },
+  modalTitle: { type: String, default: "Тілек қалдыру" },
+  modalSubtitle: { type: String, default: "Жас жұбайларға жылы сөздер жазыңыз." },
+  nameLabel: { type: String, default: "Атыңыз" },
+  wishLabel: { type: String, default: "Тілегіңіз" },
+  closeText: { type: String, default: "Жабу" },
   buttonText: { type: String, default: "Жіберу" },
   sendingText: { type: String, default: "Жіберілуде…" },
   sentText: { type: String, default: "Рақмет! Тілегіңіз қабылданды ✓" },
@@ -21,6 +24,20 @@ const wishText = ref("");
 const isSubmitting = ref(false);
 const isSent = ref(false);
 const isError = ref(false);
+
+const openModal = () => {
+  isError.value = false;
+  isOpen.value = true;
+};
+const closeModal = () => {
+  if (isSubmitting.value) return;
+  isOpen.value = false;
+};
+
+// Блокируем прокрутку страницы, пока открыта модалка
+watch(isOpen, (open) => {
+  document.body.style.overflow = open ? "hidden" : "";
+});
 
 // Тот же Apps Script, что и для анкеты
 const SHEETS_URL = import.meta.env.VITE_SHEETS_URL;
@@ -97,12 +114,7 @@ const submitWish = async () => {
     <p class="wishes__subtitle t-body">{{ subtitle }}</p>
 
     <!-- Тёмная кнопка-пилюля, как в Naz -->
-    <button
-      v-if="!isOpen"
-      class="wishes__open"
-      type="button"
-      @click="isOpen = true"
-    >
+    <button class="wishes__open" type="button" @click="openModal">
       <svg class="wishes__mail" viewBox="0 0 24 24" aria-hidden="true">
         <rect x="3" y="5" width="18" height="14" rx="2"
           fill="none" stroke="currentColor" stroke-width="1.6" />
@@ -112,29 +124,58 @@ const submitWish = async () => {
       <span>{{ openButton }}</span>
     </button>
 
-    <form v-else class="wishes__form" @submit.prevent="submitWish">
-      <input
-        v-model="wishName"
-        class="wfield__input"
-        type="text"
-        :placeholder="nameLabel"
-        autocomplete="name"
-      />
-      <textarea
-        v-model="wishText"
-        class="wfield__input wfield__input--area"
-        rows="4"
-        :placeholder="wishLabel"
-      ></textarea>
-      <button class="wishes__submit" type="submit" :disabled="isSubmitting">
-        {{ isSubmitting ? sendingText : buttonText }}
-      </button>
-    </form>
-
     <p v-if="isSent" class="wishes__status">{{ sentText }}</p>
-    <p v-if="isError" class="wishes__status wishes__status--error">
-      {{ errorText }}
-    </p>
+
+    <!-- Модальное окно, как в Naz -->
+    <Teleport to="body">
+      <div
+        v-if="isOpen"
+        class="wmodal"
+        role="dialog"
+        aria-modal="true"
+        @click.self="closeModal"
+      >
+        <div class="wmodal__card">
+          <div class="wmodal__title">{{ modalTitle }}</div>
+          <p class="wmodal__subtitle">{{ modalSubtitle }}</p>
+
+          <form class="wmodal__form" @submit.prevent="submitWish">
+            <label class="wmodal__field">
+              <span class="wmodal__label">{{ nameLabel }}</span>
+              <input v-model="wishName" class="wmodal__input" type="text" />
+            </label>
+
+            <label class="wmodal__field">
+              <span class="wmodal__label">{{ wishLabel }}</span>
+              <textarea
+                v-model="wishText"
+                class="wmodal__input wmodal__input--area"
+                rows="5"
+              ></textarea>
+            </label>
+
+            <p v-if="isError" class="wmodal__error">{{ errorText }}</p>
+
+            <div class="wmodal__actions">
+              <button
+                class="wmodal__btn wmodal__btn--ghost"
+                type="button"
+                @click="closeModal"
+              >
+                {{ closeText }}
+              </button>
+              <button
+                class="wmodal__btn wmodal__btn--primary"
+                type="submit"
+                :disabled="isSubmitting || !wishName.trim() || !wishText.trim()"
+              >
+                {{ isSubmitting ? sendingText : buttonText }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </Teleport>
   </section>
 </template>
 
@@ -165,43 +206,6 @@ const submitWish = async () => {
 .wishes__open:hover { transform: translateY(-2px); }
 .wishes__mail { width: 18px; height: 18px; }
 
-.wishes__form {
-  margin: 28px auto 0;
-  max-width: 330px;
-  display: grid;
-  gap: 14px;
-  text-align: left;
-}
-.wfield__input {
-  padding: 14px 22px;
-  border: 1px solid rgba(42, 50, 54, 0.55);
-  border-radius: 26px;
-  background: transparent;
-  color: var(--ink);
-  font-family: var(--font-body);
-  font-size: 18px;
-  transition: border-color 0.2s;
-}
-.wfield__input::placeholder { color: var(--ink-mute); }
-.wfield__input:focus { border-color: var(--ink); }
-.wfield__input--area { resize: vertical; min-height: 110px; line-height: 1.6; }
-
-.wishes__submit {
-  margin: 6px auto 0;
-  min-width: 160px;
-  padding: 13px 34px;
-  border-radius: 999px;
-  background: var(--primary);
-  color: var(--primary-ink);
-  font-family: var(--font-body);
-  letter-spacing: 0.32em;
-  padding-left: calc(34px + 0.32em);
-  font-size: 15px;
-  transition: transform 0.15s;
-}
-.wishes__submit:hover:not(:disabled) { transform: translateY(-1px); }
-.wishes__submit:disabled { background: #aca7a1; }
-
 .wishes__status {
   margin-top: 18px;
   font-family: var(--font-body);
@@ -209,5 +213,96 @@ const submitWish = async () => {
   font-size: 17px;
   color: var(--ink);
 }
-.wishes__status--error { color: #8a2119; }
+</style>
+
+<!-- Стили модалки без scoped: она телепортируется в <body> -->
+<style>
+.wmodal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(42, 40, 36, 0.55);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+.wmodal__card {
+  width: min(430px, 100%);
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+  padding: 26px 24px 22px;
+  text-align: left;
+}
+
+.wmodal__title {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #1c1a17;
+}
+.wmodal__subtitle {
+  margin-top: 6px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: #4a463f;
+}
+
+.wmodal__form { margin-top: 18px; display: grid; gap: 16px; }
+
+.wmodal__field { display: grid; gap: 7px; }
+.wmodal__label {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8a7f6b;
+}
+.wmodal__input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #d8cdb6;
+  border-radius: 8px;
+  background: #faf5ea;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 16px;
+  color: #1c1a17;
+  transition: border-color 0.2s;
+}
+.wmodal__input:focus { border-color: #b3a284; }
+.wmodal__input--area { resize: vertical; min-height: 110px; line-height: 1.5; }
+
+.wmodal__error {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  color: #8a2119;
+}
+
+.wmodal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+}
+.wmodal__btn {
+  padding: 10px 20px;
+  border-radius: 9px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 15px;
+  transition: opacity 0.2s, background 0.2s;
+}
+.wmodal__btn--ghost {
+  background: #fff;
+  border: 1px solid #ddd6c8;
+  color: #2b2822;
+}
+.wmodal__btn--ghost:hover { background: #f6f2e9; }
+.wmodal__btn--primary {
+  background: #b3a284;
+  color: #fff;
+}
+.wmodal__btn--primary:hover:not(:disabled) { background: #a3906f; }
+.wmodal__btn--primary:disabled { opacity: 0.65; }
 </style>
