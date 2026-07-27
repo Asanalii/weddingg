@@ -10,9 +10,14 @@ const props = defineProps({
   musicUrl: { type: String, required: true },
 });
 
-// «Алпамыс & Арайлым» -> имена в столбик, как в Naz
+// «Алпамыс & Арайлым» -> имена в столбик; «Назерке» -> одно крупное имя
+const isCouple = computed(() => props.coupleNames.includes("&"));
 const groom = computed(() => props.coupleNames.split("&")[0]?.trim() || "");
-const bride = computed(() => props.coupleNames || "");
+const bride = computed(() =>
+  isCouple.value
+    ? props.coupleNames.split("&")[1]?.trim() || ""
+    : props.coupleNames.trim(),
+);
 
 const prettyDate = computed(() => {
   const d = new Date(props.eventIso);
@@ -78,14 +83,25 @@ onBeforeUnmount(() => audioElement.pause());
       @ended="onEnded"
     ></video>
 
-    <div class="hero__content">
-      <div class="hero__kicker">{{ kicker }}</div>
+    <div class="hero__content" :class="{ 'hero__content--solo': !isCouple }">
+      <div class="hero__kicker" v-reveal="{ from: 'left', delay: 200 }">
+        {{ kicker }}
+      </div>
 
-      <!-- <h1 class="hero__name">{{ groom }}</h1>
-      <div class="hero__amp">&amp;</div> -->
-      <h1 class="hero__name">{{ bride }}</h1>
+      <div class="hero__ornament" aria-hidden="true" v-reveal="{ from: 'zoom', delay: 450 }">
+        <span></span><i>✦</i><span></span>
+      </div>
 
-      <div class="hero__date t-spaced">{{ prettyDate }}</div>
+      <template v-if="isCouple">
+        <h1 class="hero__name" v-reveal="{ from: 'right', delay: 500 }">{{ groom }}</h1>
+        <div class="hero__amp" v-reveal="{ from: 'zoom', delay: 650 }">&amp;</div>
+        <h1 class="hero__name" v-reveal="{ from: 'left', delay: 800 }">{{ bride }}</h1>
+      </template>
+      <h1 v-else class="hero__name hero__name--solo" v-reveal="{ from: 'right', delay: 550 }">
+        {{ bride }}
+      </h1>
+
+      <div class="hero__date t-spaced" v-reveal="{ delay: 900 }">{{ prettyDate }}</div>
     </div>
 
     <!-- круглая кнопка музыки, как в Naz -->
@@ -139,6 +155,29 @@ onBeforeUnmount(() => audioElement.pause());
   line-height: 1.2;
   color: rgba(42, 50, 54, 0.78);
   text-shadow: 0 2px 6px rgba(255, 255, 255, 0.6);
+}
+/* Режим одного имени (қыз ұзату): всё крупнее, чтобы hero не пустовал */
+.hero__content--solo .hero__kicker { font-size: 27px; letter-spacing: 0.04em; }
+
+/* Тонкий орнамент-разделитель под kicker */
+.hero__ornament {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: min(210px, 60%);
+  color: var(--accent);
+}
+.hero__ornament span {
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(90deg, transparent, rgba(168, 137, 90, 0.75), transparent);
+}
+.hero__ornament i {
+  font-style: normal;
+  font-size: 12px;
+  line-height: 1;
+  opacity: 0.9;
 }
 
 .hero__name {

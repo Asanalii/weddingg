@@ -110,11 +110,11 @@ const submitWish = async () => {
     class="hsec wishes"
     :style="{ backgroundImage: `url('${bg}')` }"
   >
-    <h2 class="hsec__title t-script wishes__title">{{ title }}</h2>
-    <p class="wishes__subtitle t-body">{{ subtitle }}</p>
+    <h2 class="hsec__title t-script wishes__title" v-reveal="{ from: 'left' }">{{ title }}</h2>
+    <p class="wishes__subtitle t-body" v-reveal="{ delay: 130 }">{{ subtitle }}</p>
 
     <!-- Тёмная кнопка-пилюля, как в Naz -->
-    <button class="wishes__open" type="button" @click="openModal">
+    <button class="wishes__open" v-reveal="{ from: 'zoom', delay: 240 }" type="button" @click="openModal">
       <svg class="wishes__mail" viewBox="0 0 24 24" aria-hidden="true">
         <rect x="3" y="5" width="18" height="14" rx="2"
           fill="none" stroke="currentColor" stroke-width="1.6" />

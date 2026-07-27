@@ -49,14 +49,14 @@ const calendarCells = computed(() => {
 <template>
   <!-- Приглашение + дата + календарь + сағат (фон heritage-2) -->
   <section class="hsec" :style="{ backgroundImage: `url('${bgInvite}')` }">
-    <h2 class="hsec__title t-script invite__title">{{ title }}</h2>
+    <h2 class="hsec__title t-script invite__title" v-reveal="{ from: 'left' }">{{ title }}</h2>
 
-    <p class="invite__text t-body">{{ invitationText }}</p>
+    <p class="invite__text t-body" v-reveal="{ delay: 150 }">{{ invitationText }}</p>
 
-    <div class="invite__date t-script">{{ dateText }}</div>
+    <div class="invite__date t-script" v-reveal="{ from: 'right', delay: 100 }">{{ dateText }}</div>
 
     <!-- Календарь heritage: минималистичный, цифры каллиграфией -->
-    <div class="cal">
+    <div class="cal" v-reveal="{ delay: 200 }">
       <div class="cal__weekdays">
         <div v-for="wd in weekdays" :key="wd" class="cal__weekday">
           {{ wd }}
@@ -85,15 +85,15 @@ const calendarCells = computed(() => {
       </div>
     </div>
 
-    <div class="invite__time t-script">{{ timeText }}</div>
+    <div class="invite__time t-script" v-reveal="{ from: 'zoom', delay: 150 }">{{ timeText }}</div>
   </section>
 
   <!-- Мекен-жай (фон heritage-1) -->
   <section class="hsec" :style="{ backgroundImage: `url('${bgAddress}')` }">
-    <h2 class="hsec__title t-script addr__title">{{ locationTitle }}</h2>
-    <div class="hsec__subtitle">{{ locationSubtitle }}</div>
+    <h2 class="hsec__title t-script addr__title" v-reveal="{ from: 'left' }">{{ locationTitle }}</h2>
+    <div class="hsec__subtitle" v-reveal="{ delay: 120 }">{{ locationSubtitle }}</div>
 
-    <div class="addr__lines t-body">
+    <div class="addr__lines t-body" v-reveal="{ from: 'right', delay: 180 }">
       <div>{{ locationCity }}</div>
       <div>{{ locationAddress }}</div>
       <div class="addr__hall">{{ locationName }}</div>
@@ -101,6 +101,7 @@ const calendarCells = computed(() => {
 
     <a
       v-if="twoGisLink && mapText"
+      v-reveal="{ delay: 280 }"
       class="addr__map"
       :href="twoGisLink"
       target="_blank"

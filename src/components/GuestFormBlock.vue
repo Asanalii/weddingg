@@ -147,9 +147,9 @@ const submitForm = async () => {
 
 <template>
   <section class="hsec" :style="{ backgroundImage: `url('${bg}')` }">
-    <h2 class="hsec__title t-script rsvp__title">{{ title }}</h2>
+    <h2 class="hsec__title t-script rsvp__title" v-reveal="{ from: 'left' }">{{ title }}</h2>
 
-    <form class="rsvp__form" @submit.prevent="submitForm">
+    <form class="rsvp__form" v-reveal="{ delay: 150 }" @submit.prevent="submitForm">
       <label class="rfield">
         <span class="rfield__label t-body">{{ nameLabel }}</span>
         <input

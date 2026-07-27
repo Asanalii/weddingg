@@ -34,11 +34,11 @@ const iconFor = (key) => iconMap[key] || archIcon;
 
 <template>
   <section class="hsec" :style="{ backgroundImage: `url('${bg}')` }">
-    <h2 class="hsec__title t-script prog__kicker">{{ kicker }}</h2>
-    <div class="hsec__subtitle">{{ title }}</div>
+    <h2 class="hsec__title t-script prog__kicker" v-reveal="{ from: 'left' }">{{ kicker }}</h2>
+    <div class="hsec__subtitle" v-reveal="{ delay: 120 }">{{ title }}</div>
 
     <ol class="prog">
-      <li v-for="(it, i) in items" :key="i" class="prog__row">
+      <li v-for="(it, i) in items" :key="i" class="prog__row" v-reveal="{ from: 'left', delay: 120 + i * 130 }">
         <div class="prog__icon">
           <img :src="iconFor(it.icon)" alt="" loading="lazy" />
         </div>

@@ -46,9 +46,9 @@ onBeforeUnmount(() => {
 
 <template>
   <section class="hsec" :style="{ backgroundImage: `url('${bg}')` }">
-    <h2 class="hsec__title t-script cd__label">{{ label }}</h2>
+    <h2 class="hsec__title t-script cd__label" v-reveal="{ from: 'left' }">{{ label }}</h2>
 
-    <div class="cd__row">
+    <div class="cd__row" v-reveal="{ from: 'zoom', delay: 150 }">
       <div class="cd__item">
         <div class="cd__value t-script">{{ timeLeft.days }}</div>
         <div class="cd__unit t-body">{{ units.days }}</div>
@@ -67,12 +67,12 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <p class="cd__note t-body">{{ note }}</p>
+    <p class="cd__note t-body" v-reveal="{ delay: 250 }">{{ note }}</p>
 
     <!-- Той иелері — в том же блоке -->
-    <h2 class="hsec__title t-script cd__hostsLabel">{{ hostsLabel }}</h2>
-    <div class="cd__hostsNames t-script">{{ hostsNames }}</div>
-    <p class="cd__hostsWelcome t-body">{{ hostsWelcome }}</p>
+    <h2 class="hsec__title t-script cd__hostsLabel" v-reveal="{ from: 'right' }">{{ hostsLabel }}</h2>
+    <div class="cd__hostsNames t-script" v-reveal="{ delay: 130 }">{{ hostsNames }}</div>
+    <p class="cd__hostsWelcome t-body" v-reveal="{ delay: 230 }">{{ hostsWelcome }}</p>
   </section>
 </template>
 
