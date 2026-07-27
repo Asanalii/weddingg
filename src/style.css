@@ -3,16 +3,8 @@
    (акварель, қазақ орнаменттері, каллиграфия)
    ========================================================= */
 
-/* Кастомный каллиграфический шрифт шаблона.
-   Загружается с shakyrtu.kz; лучше скачать файл в /public/fonts/
-   и заменить src на url("/fonts/AsylbekM02Shelley.woff2"). */
-@font-face {
-  font-family: "Asylbek Shelley";
-  src: url("https://shakyrtu.kz/fonts/AsylbekM02Shelley.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
+/* Шрифт "Asylbek Shelley" подключается в index.html
+   (там работает %BASE_URL%, поэтому путь к /public корректен и в dev, и в build). */
 
 :root {
   /* ---- Палитра heritage (точные значения из Naz) ---- */

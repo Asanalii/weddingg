@@ -14,6 +14,10 @@ const props = defineProps({
     }),
   },
   note: { type: String, default: "Тойға келуіңізді растауыңызды сұраймыз!" },
+  /* — Той иелері (объединено в один блок с отсчётом) — */
+  hostsLabel: { type: String, default: "Той иелері:" },
+  hostsNames: { type: String, default: "Амандос - Айым" },
+  hostsWelcome: { type: String, default: "Сіздерді тойымызда күтеміз!" },
   bg: { type: String, required: true },
 });
 
@@ -64,6 +68,11 @@ onBeforeUnmount(() => {
     </div>
 
     <p class="cd__note t-body">{{ note }}</p>
+
+    <!-- Той иелері — в том же блоке -->
+    <h2 class="hsec__title t-script cd__hostsLabel">{{ hostsLabel }}</h2>
+    <div class="cd__hostsNames t-script">{{ hostsNames }}</div>
+    <p class="cd__hostsWelcome t-body">{{ hostsWelcome }}</p>
   </section>
 </template>
 
@@ -91,6 +100,23 @@ onBeforeUnmount(() => {
 .cd__note {
   margin: 32px auto 0;
   max-width: 300px;
+  font-style: italic;
+  font-size: 18px;
+  color: var(--ink);
+}
+
+/* Той иелері */
+.cd__hostsLabel {
+  margin-top: clamp(44px, 12vw, 56px);
+  letter-spacing: 0.2em;
+}
+.cd__hostsNames {
+  margin-top: 18px;
+  font-size: clamp(26px, 7.6vw, 32px);
+  letter-spacing: 0.14em;
+}
+.cd__hostsWelcome {
+  margin-top: 20px;
   font-style: italic;
   font-size: 18px;
   color: var(--ink);

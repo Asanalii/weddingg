@@ -105,7 +105,8 @@ onBeforeUnmount(() => audioElement.pause());
 .hero {
   position: relative;
   width: 100%;
-  min-height: 100dvh;
+  /* Пропорция самого видео (720×1560) — кадр виден целиком, без обрезки */
+  aspect-ratio: 720 / 1560;
   overflow: hidden;
   background: #f1e8d8; /* фолбэк, пока грузится видео (значение из Naz) */
 }

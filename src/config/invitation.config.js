@@ -21,10 +21,9 @@ const bgPlain = new URL("@/assets/images/naz/heritage-1.webp", import.meta.url)
 const shared = {
   eventDateTime: "2026-08-27T18:00:00+05:00", // 01.10.2026, 18:00, UTC+5
   hero: {
-    // Видео пары в национальных костюмах (с shakyrtu.kz).
-    // Надёжнее скачать файл в /public/media/ и указать "/media/heritage-hero.mp4".
-    videoUrl: "https://shakyrtu.kz/media/a/heritage-hero.mp4",
-    posterUrl: "https://shakyrtu.kz/media/a/heritage-hero-poster.webp",
+    // Локальные файлы из /public (учитываем base "/wedding/" из vite.config.js)
+    videoUrl: `${import.meta.env.BASE_URL}heritage-hero.mp4`,
+    posterUrl: "", // видео локальное и лёгкое — постер не обязателен
   },
   backgrounds: {
     invite: bgInvite,
@@ -35,7 +34,8 @@ const shared = {
   musicUrl:
     "https://dl.dropboxusercontent.com/s/agxcxm6pef0zkth/Ed%20Sheeran%20-%20Perfect%20%28Piano%29%20%28minus%205%29.mp3?st=6zhvreap&dl=0",
   location: {
-    mapLink: "https://2gis.kz/",
+    mapLink:
+      "https://2gis.kz/shymkent/geo/70000001076544637/69.536423,42.347318",
   },
 };
 
@@ -66,9 +66,9 @@ export const configs = {
     },
     location: {
       ...shared.location,
-      city: "Құлсары қаласы",
-      address: "Сырым Датов, 57",
-      placeName: '"Grand Hall"',
+      city: "Шымкент қаласы",
+      address: "Тамерлановское шоссе, 111Б",
+      placeName: '"Hanshayim"',
       mapText: "Картадан қарау",
     },
     program: {

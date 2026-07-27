@@ -9,7 +9,6 @@ import HeroSection from "./components/HeroSection.vue";
 import InvitationDetails from "./components/InvitationDetails.vue";
 import ProgramBlock from "./components/ProgramBlock.vue";
 import CountdownBlock from "./components/CountdownBlock.vue";
-import HostsBlock from "./components/HostsBlock.vue";
 import GuestFormBlock from "./components/GuestFormBlock.vue";
 import WishesBlock from "./components/WishesBlock.vue";
 import LangSwitcher from "./components/LangSwitcher.vue";
@@ -58,18 +57,15 @@ const config = computed(() => getConfig(lang));
         :bg="config.backgrounds.program"
       /> -->
 
+      <!-- Тойға дейін + Той иелері — один блок -->
       <CountdownBlock
         :event-iso="config.eventDateTime"
         :label="config.countdown.label"
         :units="config.countdown.units"
         :note="config.countdown.note"
-        :bg="config.backgrounds.plain"
-      />
-
-      <HostsBlock
-        :label="config.hosts.label"
-        :names="config.hosts.names"
-        :welcome="config.hosts.welcome"
+        :hosts-label="config.hosts.label"
+        :hosts-names="config.hosts.names"
+        :hosts-welcome="config.hosts.welcome"
         :bg="config.backgrounds.plain"
       />
 
