@@ -88,20 +88,36 @@ onBeforeUnmount(() => audioElement.pause());
         {{ kicker }}
       </div>
 
-      <div class="hero__ornament" aria-hidden="true" v-reveal="{ from: 'zoom', delay: 450 }">
+      <div
+        class="hero__ornament"
+        aria-hidden="true"
+        v-reveal="{ from: 'zoom', delay: 450 }"
+      >
         <span></span><i>✦</i><span></span>
       </div>
 
       <template v-if="isCouple">
-        <h1 class="hero__name" v-reveal="{ from: 'right', delay: 500 }">{{ groom }}</h1>
-        <div class="hero__amp" v-reveal="{ from: 'zoom', delay: 650 }">&amp;</div>
-        <h1 class="hero__name" v-reveal="{ from: 'left', delay: 800 }">{{ bride }}</h1>
+        <h1 class="hero__name" v-reveal="{ from: 'right', delay: 500 }">
+          {{ groom }}
+        </h1>
+        <div class="hero__amp" v-reveal="{ from: 'zoom', delay: 650 }">
+          &amp;
+        </div>
+        <h1 class="hero__name" v-reveal="{ from: 'left', delay: 800 }">
+          {{ bride }}
+        </h1>
       </template>
-      <h1 v-else class="hero__name hero__name--solo" v-reveal="{ from: 'right', delay: 550 }">
+      <h1
+        v-else
+        class="hero__name hero__name--solo"
+        v-reveal="{ from: 'right', delay: 550 }"
+      >
         {{ bride }}
       </h1>
 
-      <div class="hero__date t-spaced" v-reveal="{ delay: 900 }">{{ prettyDate }}</div>
+      <div class="hero__date t-spaced" v-reveal="{ delay: 900 }">
+        {{ prettyDate }}
+      </div>
     </div>
 
     <!-- круглая кнопка музыки, как в Naz -->
@@ -157,7 +173,14 @@ onBeforeUnmount(() => audioElement.pause());
   text-shadow: 0 2px 6px rgba(255, 255, 255, 0.6);
 }
 /* Режим одного имени (қыз ұзату): всё крупнее, чтобы hero не пустовал */
-.hero__content--solo .hero__kicker { font-size: 27px; letter-spacing: 0.04em; }
+.hero__content--solo {
+  /* поднимаем тексты выше — пара остаётся снизу, надписи над ней */
+  padding-bottom: 42%;
+}
+.hero__content--solo .hero__kicker {
+  font-size: 40px;
+  letter-spacing: 0.04em;
+}
 
 /* Тонкий орнамент-разделитель под kicker */
 .hero__ornament {
@@ -171,7 +194,12 @@ onBeforeUnmount(() => audioElement.pause());
 .hero__ornament span {
   height: 1px;
   flex: 1;
-  background: linear-gradient(90deg, transparent, rgba(168, 137, 90, 0.75), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(168, 137, 90, 0.75),
+    transparent
+  );
 }
 .hero__ornament i {
   font-style: normal;
