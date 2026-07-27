@@ -12,7 +12,7 @@ const props = defineProps({
 
 // «Алпамыс & Арайлым» -> имена в столбик, как в Naz
 const groom = computed(() => props.coupleNames.split("&")[0]?.trim() || "");
-const bride = computed(() => props.coupleNames.split("&")[1]?.trim() || "");
+const bride = computed(() => props.coupleNames || "");
 
 const prettyDate = computed(() => {
   const d = new Date(props.eventIso);
@@ -81,8 +81,8 @@ onBeforeUnmount(() => audioElement.pause());
     <div class="hero__content">
       <div class="hero__kicker">{{ kicker }}</div>
 
-      <h1 class="hero__name">{{ groom }}</h1>
-      <div class="hero__amp">&amp;</div>
+      <!-- <h1 class="hero__name">{{ groom }}</h1> -->
+      <!-- <div class="hero__amp">&amp;</div> -->
       <h1 class="hero__name">{{ bride }}</h1>
 
       <div class="hero__date t-spaced">{{ prettyDate }}</div>
@@ -151,7 +151,9 @@ onBeforeUnmount(() => audioElement.pause());
   color: var(--ink);
   text-shadow: 0 3px 10px rgba(255, 255, 255, 0.7);
 }
-.hero__name + .hero__name { margin-top: 0; }
+.hero__name + .hero__name {
+  margin-top: 0;
+}
 
 .hero__amp {
   font-family: var(--font-display);
@@ -181,8 +183,16 @@ onBeforeUnmount(() => audioElement.pause());
   place-items: center;
   box-shadow: 0 8px 24px rgba(42, 50, 54, 0.18);
   backdrop-filter: blur(6px);
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
 }
-.hero__play:hover { transform: translateY(-2px); background: #fff; }
-.hero__pause { font-size: 10px; letter-spacing: 1px; }
+.hero__play:hover {
+  transform: translateY(-2px);
+  background: #fff;
+}
+.hero__pause {
+  font-size: 10px;
+  letter-spacing: 1px;
+}
 </style>
