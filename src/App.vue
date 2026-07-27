@@ -15,6 +15,7 @@ import LangSwitcher from "./components/LangSwitcher.vue";
 
 const lang = detectLang();
 const config = computed(() => getConfig(lang));
+//
 </script>
 
 <template>
