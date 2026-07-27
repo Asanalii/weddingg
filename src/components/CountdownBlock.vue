@@ -1,0 +1,98 @@
+<script setup>
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+
+const props = defineProps({
+  eventIso: { type: String, required: true },
+  label: { type: String, default: "Тойға дейін:" },
+  units: {
+    type: Object,
+    default: () => ({
+      days: "күн",
+      hours: "сағат",
+      minutes: "минут",
+      seconds: "секунд",
+    }),
+  },
+  note: { type: String, default: "Тойға келуіңізді растауыңызды сұраймыз!" },
+  bg: { type: String, required: true },
+});
+
+const nowMs = ref(Date.now());
+let timerId = null;
+
+const timeLeft = computed(() => {
+  const targetMs = new Date(props.eventIso).getTime();
+  const diffMs = Math.max(0, targetMs - nowMs.value);
+  const totalSeconds = Math.floor(diffMs / 1000);
+  return {
+    days: Math.floor(totalSeconds / 86400),
+    hours: Math.floor((totalSeconds % 86400) / 3600),
+    minutes: Math.floor((totalSeconds % 3600) / 60),
+    seconds: totalSeconds % 60,
+  };
+});
+
+onMounted(() => {
+  timerId = window.setInterval(() => (nowMs.value = Date.now()), 1000);
+});
+onBeforeUnmount(() => {
+  if (timerId) window.clearInterval(timerId);
+});
+</script>
+
+<template>
+  <section class="hsec" :style="{ backgroundImage: `url('${bg}')` }">
+    <h2 class="hsec__title t-script cd__label">{{ label }}</h2>
+
+    <div class="cd__row">
+      <div class="cd__item">
+        <div class="cd__value t-script">{{ timeLeft.days }}</div>
+        <div class="cd__unit t-body">{{ units.days }}</div>
+      </div>
+      <div class="cd__item">
+        <div class="cd__value t-script">{{ timeLeft.hours }}</div>
+        <div class="cd__unit t-body">{{ units.hours }}</div>
+      </div>
+      <div class="cd__item">
+        <div class="cd__value t-script">{{ timeLeft.minutes }}</div>
+        <div class="cd__unit t-body">{{ units.minutes }}</div>
+      </div>
+      <div class="cd__item">
+        <div class="cd__value t-script">{{ timeLeft.seconds }}</div>
+        <div class="cd__unit t-body">{{ units.seconds }}</div>
+      </div>
+    </div>
+
+    <p class="cd__note t-body">{{ note }}</p>
+  </section>
+</template>
+
+<style scoped>
+.cd__label { letter-spacing: 0.2em; }
+
+.cd__row {
+  margin-top: 26px;
+  display: flex;
+  justify-content: center;
+  gap: clamp(18px, 6vw, 30px);
+}
+.cd__value {
+  font-size: clamp(38px, 11vw, 48px);
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+.cd__unit {
+  margin-top: 8px;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--ink-soft);
+}
+
+.cd__note {
+  margin: 32px auto 0;
+  max-width: 300px;
+  font-style: italic;
+  font-size: 18px;
+  color: var(--ink);
+}
+</style>

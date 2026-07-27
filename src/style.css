@@ -1,0 +1,138 @@
+/* =========================================================
+   ТОЙ ШАҚЫРУ — стиль Naz «Heritage»
+   (акварель, қазақ орнаменттері, каллиграфия)
+   ========================================================= */
+
+/* Кастомный каллиграфический шрифт шаблона.
+   Загружается с shakyrtu.kz; лучше скачать файл в /public/fonts/
+   и заменить src на url("/fonts/AsylbekM02Shelley.woff2"). */
+@font-face {
+  font-family: "Asylbek Shelley";
+  src: url("https://shakyrtu.kz/fonts/AsylbekM02Shelley.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* ---- Палитра heritage (точные значения из Naz) ---- */
+  --page-bg:   #efedea;                       /* серый фон вокруг колонки */
+  --sheet-bg:  #f1e8d8;                       /* бумага-фолбэк */
+  --paper:     rgba(248, 240, 228, 0.45);
+  --paper-alt: rgba(248, 240, 228, 0.55);
+  --ink:       #2a3236;
+  --ink-soft:  #4a5258;
+  --ink-mute:  #7d8389;
+  --rule:      rgba(42, 50, 54, 0.18);
+  --accent:    #a8895a;                       /* золото */
+  --primary:   #2a3236;
+  --primary-ink: #f8f0e4;
+
+  /* ---- Шрифты heritage ---- */
+  --font-display: "Asylbek Shelley", "Cormorant Garamond", serif; /* каллиграфия */
+  --font-body:    "Cormorant Garamond", Georgia, serif;           /* текст */
+  --font-mono:    "DM Mono", monospace;                           /* дата в разрядку */
+
+  /* ---- Геометрия ---- */
+  --sheet-max: 440px;
+
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 18px;
+  color: var(--ink);
+  background: var(--page-bg);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app { min-height: 100%; }
+
+h1,h2,h3,h4,h5,h6,p { margin: 0; }
+p { line-height: 1.85; }
+
+img, svg, video, canvas { display: block; max-width: 100%; }
+img { height: auto; }
+
+button, input, textarea, select { font: inherit; color: inherit; }
+button { border: 0; background: none; cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+input, textarea, select { outline: none; }
+
+input[type="text"], input[type="email"], input[type="tel"],
+input[type="number"], textarea {
+  -webkit-appearance: none; appearance: none;
+}
+
+a { color: inherit; text-decoration: none; }
+
+::selection { background: rgba(168, 137, 90, 0.35); color: var(--ink); }
+
+/* =========================================================
+   Типографика heritage
+   ========================================================= */
+
+/* Каллиграфический заголовок секции («Анкета», «Тілектер»…) */
+.t-script {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.12em;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+/* Текст приглашения */
+.t-body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.9;
+  color: var(--ink-soft);
+}
+
+/* Дата в разрядку: 0 1 . 1 0 . 2 0 2 6 */
+.t-spaced {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.42em;
+  color: var(--ink-soft);
+}
+
+/* Секция на акварельном фоне heritage */
+.hsec {
+  position: relative;
+  background-size: cover;
+  background-position: center top;
+  padding: clamp(48px, 14vw, 64px) 26px;
+  text-align: center;
+  overflow: hidden;
+}
+/* лёгкая вуаль для читаемости */
+.hsec::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(248, 240, 228, 0.4);
+  pointer-events: none;
+}
+.hsec > * { position: relative; }
+
+.hsec__title {
+  font-size: clamp(30px, 8.6vw, 38px);
+}
+.hsec__subtitle {
+  margin-top: 14px;
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 19px;
+  color: var(--ink-soft);
+}
