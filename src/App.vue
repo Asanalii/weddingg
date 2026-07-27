@@ -51,12 +51,12 @@ const config = computed(() => getConfig(lang));
         :bg-address="config.backgrounds.address"
       />
 
-      <ProgramBlock
+      <!-- <ProgramBlock
         :kicker="config.program.kicker"
         :title="config.program.title"
         :items="config.program.items"
         :bg="config.backgrounds.program"
-      />
+      /> -->
 
       <CountdownBlock
         :event-iso="config.eventDateTime"

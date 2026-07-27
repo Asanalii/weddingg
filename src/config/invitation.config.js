@@ -4,14 +4,22 @@
 // ============================================================
 
 // Фоны секций (акварель с орнаментами из Naz)
-const bgInvite = new URL("@/assets/images/naz/heritage-2.webp", import.meta.url).href;
-const bgAddress = new URL("@/assets/images/naz/heritage-1.webp", import.meta.url).href;
-const bgProgram = new URL("@/assets/images/naz/heritage-3.webp", import.meta.url).href;
-const bgPlain = new URL("@/assets/images/naz/heritage-1.webp", import.meta.url).href;
+const bgInvite = new URL("@/assets/images/naz/heritage-2.webp", import.meta.url)
+  .href;
+const bgAddress = new URL(
+  "@/assets/images/naz/heritage-1.webp",
+  import.meta.url,
+).href;
+const bgProgram = new URL(
+  "@/assets/images/naz/heritage-3.webp",
+  import.meta.url,
+).href;
+const bgPlain = new URL("@/assets/images/naz/heritage-1.webp", import.meta.url)
+  .href;
 
 // Общие (не зависящие от языка) данные
 const shared = {
-  eventDateTime: "2026-10-01T18:00:00+05:00", // 01.10.2026, 18:00, UTC+5
+  eventDateTime: "2026-08-27T18:00:00+05:00", // 01.10.2026, 18:00, UTC+5
   hero: {
     // Видео пары в национальных костюмах (с shakyrtu.kz).
     // Надёжнее скачать файл в /public/media/ и указать "/media/heritage-hero.mp4".
@@ -35,7 +43,7 @@ const shared = {
 export const languages = [
   { code: "kk", label: "ҚАЗ", path: "/kk" },
   { code: "ru", label: "РУС", path: "/ru" },
-  { code: "en", label: "ENG", path: "/en" },
+  // { code: "en", label: "ENG", path: "/en" },
 ];
 
 export const configs = {
@@ -43,16 +51,15 @@ export const configs = {
   kk: {
     ...shared,
     lang: "kk",
-    coupleNames: "Алпамыс & Арайлым",
+    coupleNames: "Асанәлі & Назерке",
     hero: {
       ...shared.hero,
-      kicker: "Сіздерді тойымызға шақырамыз",
+      kicker: "Сіздерді ұзатуымызға шақырамыз",
     },
     details: {
       title: "Құрметті қонақтар!",
-      text:
-        "Сіздерді тойымызға арналған салтанатты дастарханымыздың қадірлі қонағы болуға шақырамыз. Ата-баба дәстүрімен, бір шаңырақ астында бас қосатын осы күнді бізбен бірге бөлісуге шақырамыз.",
-      dateText: "1 Қазан 2026",
+      text: "Сіздерді ұзатуымызға арналған салтанатты дастарханымыздың қадірлі қонағы болуға шақырамыз. Ата-баба дәстүрімен, бір шаңырақ астында бас қосатын осы күнді бізбен бірге бөлісуге шақырамыз.",
+      dateText: "27 тамыз 2026",
       timeText: "Сағат 18:00",
       locationTitle: "Мекен-жай",
       locationSubtitle: "Той орны",
@@ -77,12 +84,17 @@ export const configs = {
     },
     countdown: {
       label: "Тойға дейін:",
-      units: { days: "күн", hours: "сағат", minutes: "минут", seconds: "секунд" },
+      units: {
+        days: "күн",
+        hours: "сағат",
+        minutes: "минут",
+        seconds: "секунд",
+      },
       note: "Тойға келуіңізді растауыңызды сұраймыз!",
     },
     hosts: {
       label: "Той иелері:",
-      names: "Амандос - Айым",
+      names: "Бақыт - Гуля",
       welcome: "Сіздерді тойымызда күтеміз!",
     },
     rsvp: {
@@ -123,8 +135,7 @@ export const configs = {
     },
     details: {
       title: "Дорогие гости!",
-      text:
-        "Приглашаем вас стать почётными гостями торжественного дастархана в честь нашей свадьбы. По традициям предков приглашаем разделить с нами этот день, когда мы соединяемся под одним шаныраком.",
+      text: "Приглашаем вас стать почётными гостями торжественного дастархана в честь нашей свадьбы. По традициям предков приглашаем разделить с нами этот день, когда мы соединяемся под одним шаныраком.",
       dateText: "1 Октября 2026",
       timeText: "Время 18:00",
       locationTitle: "Адрес",
@@ -150,7 +161,12 @@ export const configs = {
     },
     countdown: {
       label: "До торжества:",
-      units: { days: "дней", hours: "часов", minutes: "минут", seconds: "секунд" },
+      units: {
+        days: "дней",
+        hours: "часов",
+        minutes: "минут",
+        seconds: "секунд",
+      },
       note: "Просим подтвердить ваше присутствие!",
     },
     hosts: {
@@ -196,8 +212,7 @@ export const configs = {
     },
     details: {
       title: "Dear guests!",
-      text:
-        "We invite you to be the honoured guests of the festive dastarkhan held in honour of our wedding. Following the traditions of our ancestors, join us on the day we unite under one shanyrak.",
+      text: "We invite you to be the honoured guests of the festive dastarkhan held in honour of our wedding. Following the traditions of our ancestors, join us on the day we unite under one shanyrak.",
       dateText: "October 1, 2026",
       timeText: "At 18:00",
       locationTitle: "Address",
@@ -223,7 +238,12 @@ export const configs = {
     },
     countdown: {
       label: "Until the wedding:",
-      units: { days: "days", hours: "hours", minutes: "minutes", seconds: "seconds" },
+      units: {
+        days: "days",
+        hours: "hours",
+        minutes: "minutes",
+        seconds: "seconds",
+      },
       note: "Please confirm your attendance!",
     },
     hosts: {
