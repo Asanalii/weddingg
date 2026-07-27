@@ -30,6 +30,7 @@ const shared = {
     address: bgAddress,
     program: bgProgram,
     plain: bgPlain,
+    //
   },
   musicUrl:
     "https://dl.dropboxusercontent.com/s/agxcxm6pef0zkth/Ed%20Sheeran%20-%20Perfect%20%28Piano%29%20%28minus%205%29.mp3?st=6zhvreap&dl=0",
