@@ -34,11 +34,18 @@ const iconFor = (key) => iconMap[key] || archIcon;
 
 <template>
   <section class="hsec" :style="{ backgroundImage: `url('${bg}')` }">
-    <h2 class="hsec__title t-script prog__kicker" v-reveal="{ from: 'left' }">{{ kicker }}</h2>
+    <h2 class="hsec__title t-script prog__kicker" v-reveal="{ from: 'left' }">
+      {{ kicker }}
+    </h2>
     <div class="hsec__subtitle" v-reveal="{ delay: 120 }">{{ title }}</div>
 
     <ol class="prog">
-      <li v-for="(it, i) in items" :key="i" class="prog__row" v-reveal="{ from: 'left', delay: 120 + i * 130 }">
+      <li
+        v-for="(it, i) in items"
+        :key="i"
+        class="prog__row"
+        v-reveal="{ from: 'left', delay: 120 + i * 130 }"
+      >
         <div class="prog__icon">
           <img :src="iconFor(it.icon)" alt="" loading="lazy" />
         </div>
@@ -65,7 +72,9 @@ const iconFor = (key) => iconMap[key] || archIcon;
 </template>
 
 <style scoped>
-.prog__kicker { letter-spacing: 0.2em; }
+.prog__kicker {
+  letter-spacing: 0.2em;
+}
 
 .prog {
   list-style: none;
@@ -119,14 +128,16 @@ const iconFor = (key) => iconMap[key] || archIcon;
   background: var(--rule);
 }
 
-.prog__info { padding-left: 8px; }
+.prog__info {
+  padding-left: 8px;
+}
 .prog__time {
-  font-size: 27px;
+  font-size: 30px;
   letter-spacing: 0.06em;
 }
 .prog__text {
   margin-top: 2px;
-  font-size: 17px;
+  font-size: 18px;
   color: var(--ink-soft);
 }
 </style>

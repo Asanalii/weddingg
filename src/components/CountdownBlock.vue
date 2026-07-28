@@ -46,7 +46,9 @@ onBeforeUnmount(() => {
 
 <template>
   <section class="hsec" :style="{ backgroundImage: `url('${bg}')` }">
-    <h2 class="hsec__title t-script cd__label" v-reveal="{ from: 'left' }">{{ label }}</h2>
+    <h2 class="hsec__title t-script cd__label" v-reveal="{ from: 'left' }">
+      {{ label }}
+    </h2>
 
     <div class="cd__row" v-reveal="{ from: 'zoom', delay: 150 }">
       <div class="cd__item">
@@ -70,14 +72,25 @@ onBeforeUnmount(() => {
     <p class="cd__note t-body" v-reveal="{ delay: 250 }">{{ note }}</p>
 
     <!-- Той иелері — в том же блоке -->
-    <h2 class="hsec__title t-script cd__hostsLabel" v-reveal="{ from: 'right' }">{{ hostsLabel }}</h2>
-    <div class="cd__hostsNames t-script" v-reveal="{ delay: 130 }">{{ hostsNames }}</div>
-    <p class="cd__hostsWelcome t-body" v-reveal="{ delay: 230 }">{{ hostsWelcome }}</p>
+    <h2
+      class="hsec__title t-script cd__hostsLabel"
+      v-reveal="{ from: 'right' }"
+    >
+      {{ hostsLabel }}
+    </h2>
+    <div class="cd__hostsNames t-script" v-reveal="{ delay: 130 }">
+      {{ hostsNames }}
+    </div>
+    <p class="cd__hostsWelcome t-body" v-reveal="{ delay: 230 }">
+      {{ hostsWelcome }}
+    </p>
   </section>
 </template>
 
 <style scoped>
-.cd__label { letter-spacing: 0.2em; }
+.cd__label {
+  letter-spacing: 0.2em;
+}
 
 .cd__row {
   margin-top: 26px;
@@ -86,22 +99,22 @@ onBeforeUnmount(() => {
   gap: clamp(18px, 6vw, 30px);
 }
 .cd__value {
-  font-size: clamp(38px, 11vw, 48px);
+  font-size: clamp(42px, 12vw, 53px);
   letter-spacing: 0.02em;
   line-height: 1;
 }
 .cd__unit {
   margin-top: 8px;
   font-style: italic;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--ink-soft);
 }
 
 .cd__note {
   margin: 32px auto 0;
-  max-width: 300px;
+  max-width: 320px;
   font-style: italic;
-  font-size: 18px;
+  font-size: 19px;
   color: var(--ink);
 }
 
@@ -112,13 +125,13 @@ onBeforeUnmount(() => {
 }
 .cd__hostsNames {
   margin-top: 18px;
-  font-size: clamp(26px, 7.6vw, 32px);
+  font-size: clamp(29px, 8.2vw, 35px);
   letter-spacing: 0.14em;
 }
 .cd__hostsWelcome {
   margin-top: 20px;
   font-style: italic;
-  font-size: 18px;
+  font-size: 19px;
   color: var(--ink);
 }
 </style>

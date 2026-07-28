@@ -6,7 +6,10 @@ const props = defineProps({
   subtitle: { type: String, default: "Жас жұбайларға тілек қалдырыңыз." },
   openButton: { type: String, default: "Тілек қалдыру" },
   modalTitle: { type: String, default: "Тілек қалдыру" },
-  modalSubtitle: { type: String, default: "Жас жұбайларға жылы сөздер жазыңыз." },
+  modalSubtitle: {
+    type: String,
+    default: "Жас жұбайларға жылы сөздер жазыңыз.",
+  },
   nameLabel: { type: String, default: "Атыңыз" },
   wishLabel: { type: String, default: "Тілегіңіз" },
   closeText: { type: String, default: "Жабу" },
@@ -106,20 +109,38 @@ const submitWish = async () => {
 </script>
 
 <template>
-  <section
-    class="hsec wishes"
-    :style="{ backgroundImage: `url('${bg}')` }"
-  >
-    <h2 class="hsec__title t-script wishes__title" v-reveal="{ from: 'left' }">{{ title }}</h2>
-    <p class="wishes__subtitle t-body" v-reveal="{ delay: 130 }">{{ subtitle }}</p>
+  <section class="hsec wishes" :style="{ backgroundImage: `url('${bg}')` }">
+    <h2 class="hsec__title t-script wishes__title" v-reveal="{ from: 'left' }">
+      {{ title }}
+    </h2>
+    <p class="wishes__subtitle t-body" v-reveal="{ delay: 130 }">
+      {{ subtitle }}
+    </p>
 
     <!-- Тёмная кнопка-пилюля, как в Naz -->
-    <button class="wishes__open" v-reveal="{ from: 'zoom', delay: 240 }" type="button" @click="openModal">
+    <button
+      class="wishes__open"
+      v-reveal="{ from: 'zoom', delay: 240 }"
+      type="button"
+      @click="openModal"
+    >
       <svg class="wishes__mail" viewBox="0 0 24 24" aria-hidden="true">
-        <rect x="3" y="5" width="18" height="14" rx="2"
-          fill="none" stroke="currentColor" stroke-width="1.6" />
-        <path d="M3.5 6.5 12 13l8.5-6.5"
-          fill="none" stroke="currentColor" stroke-width="1.6" />
+        <rect
+          x="3"
+          y="5"
+          width="18"
+          height="14"
+          rx="2"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+        />
+        <path
+          d="M3.5 6.5 12 13l8.5-6.5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+        />
       </svg>
       <span>{{ openButton }}</span>
     </button>
@@ -180,11 +201,15 @@ const submitWish = async () => {
 </template>
 
 <style scoped>
-.wishes { padding-bottom: clamp(64px, 18vw, 90px); }
-.wishes__title { letter-spacing: 0.2em; }
+.wishes {
+  padding-bottom: clamp(64px, 18vw, 90px);
+}
+.wishes__title {
+  letter-spacing: 0.2em;
+}
 .wishes__subtitle {
   margin-top: 16px;
-  font-size: 18px;
+  font-size: 19px;
   color: var(--ink);
 }
 
@@ -198,19 +223,24 @@ const submitWish = async () => {
   background: var(--primary);
   color: var(--primary-ink);
   font-family: var(--font-body);
-  font-size: 17px;
+  font-size: 18px;
   letter-spacing: 0.06em;
   box-shadow: 0 12px 30px rgba(42, 50, 54, 0.25);
   transition: transform 0.2s;
 }
-.wishes__open:hover { transform: translateY(-2px); }
-.wishes__mail { width: 18px; height: 18px; }
+.wishes__open:hover {
+  transform: translateY(-2px);
+}
+.wishes__mail {
+  width: 18px;
+  height: 18px;
+}
 
 .wishes__status {
   margin-top: 18px;
   font-family: var(--font-body);
   font-style: italic;
-  font-size: 17px;
+  font-size: 18px;
   color: var(--ink);
 }
 </style>
@@ -237,25 +267,35 @@ const submitWish = async () => {
 }
 
 .wmodal__title {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 21px;
   color: #1c1a17;
 }
 .wmodal__subtitle {
   margin-top: 6px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 14.5px;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 15.5px;
   line-height: 1.5;
   color: #4a463f;
 }
 
-.wmodal__form { margin-top: 18px; display: grid; gap: 16px; }
+.wmodal__form {
+  margin-top: 18px;
+  display: grid;
+  gap: 16px;
+}
 
-.wmodal__field { display: grid; gap: 7px; }
+.wmodal__field {
+  display: grid;
+  gap: 7px;
+}
 .wmodal__label {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 11px;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #8a7f6b;
@@ -266,16 +306,24 @@ const submitWish = async () => {
   border: 1px solid #d8cdb6;
   border-radius: 8px;
   background: #faf5ea;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 16px;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 17px;
   color: #1c1a17;
   transition: border-color 0.2s;
 }
-.wmodal__input:focus { border-color: #b3a284; }
-.wmodal__input--area { resize: vertical; min-height: 110px; line-height: 1.5; }
+.wmodal__input:focus {
+  border-color: #b3a284;
+}
+.wmodal__input--area {
+  resize: vertical;
+  min-height: 110px;
+  line-height: 1.5;
+}
 
 .wmodal__error {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 13px;
   color: #8a2119;
 }
@@ -287,22 +335,31 @@ const submitWish = async () => {
   margin-top: 4px;
 }
 .wmodal__btn {
-  padding: 10px 20px;
+  padding: 11px 22px;
   border-radius: 9px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 15px;
-  transition: opacity 0.2s, background 0.2s;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 16px;
+  transition:
+    opacity 0.2s,
+    background 0.2s;
 }
 .wmodal__btn--ghost {
   background: #fff;
   border: 1px solid #ddd6c8;
   color: #2b2822;
 }
-.wmodal__btn--ghost:hover { background: #f6f2e9; }
+.wmodal__btn--ghost:hover {
+  background: #f6f2e9;
+}
 .wmodal__btn--primary {
   background: #b3a284;
   color: #fff;
 }
-.wmodal__btn--primary:hover:not(:disabled) { background: #a3906f; }
-.wmodal__btn--primary:disabled { opacity: 0.65; }
+.wmodal__btn--primary:hover:not(:disabled) {
+  background: #a3906f;
+}
+.wmodal__btn--primary:disabled {
+  opacity: 0.65;
+}
 </style>

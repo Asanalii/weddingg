@@ -286,7 +286,7 @@ const submitForm = async () => {
   gap: 10px;
 }
 .rfield__label {
-  font-size: 18px;
+  font-size: 19px;
   color: var(--ink);
 }
 .rfield__input {
@@ -296,7 +296,7 @@ const submitForm = async () => {
   background: transparent;
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: 18px;
+  font-size: 19px;
   transition: border-color 0.2s;
   min-width: 0;
 }
@@ -309,7 +309,7 @@ const submitForm = async () => {
 
 .rsvp__question {
   margin-top: 6px;
-  font-size: 18px;
+  font-size: 19px;
   color: var(--ink);
 }
 
@@ -348,7 +348,7 @@ const submitForm = async () => {
   background: var(--ink);
 }
 .radio__text {
-  font-size: 18px;
+  font-size: 19px;
   color: var(--ink);
 }
 
@@ -390,7 +390,7 @@ const submitForm = async () => {
 }
 .check__text {
   font-style: italic;
-  font-size: 16px;
+  font-size: 17px;
   color: var(--ink);
 }
 
@@ -401,7 +401,7 @@ const submitForm = async () => {
 }
 .companions__label {
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 0.22em;
   text-transform: lowercase;
   font-variant: small-caps;
@@ -444,7 +444,7 @@ const submitForm = async () => {
   border-radius: 6px;
   background: transparent;
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: 15px;
   letter-spacing: 0.1em;
   color: var(--ink-soft);
   transition:
@@ -470,7 +470,7 @@ const submitForm = async () => {
   font-family: var(--font-body);
   letter-spacing: 0.32em;
   padding-left: calc(34px + 0.32em);
-  font-size: 15px;
+  font-size: 16px;
   transition:
     opacity 0.25s,
     transform 0.15s;
@@ -487,7 +487,7 @@ const submitForm = async () => {
   text-align: center;
   font-family: var(--font-body);
   font-style: italic;
-  font-size: 17px;
+  font-size: 18px;
   color: var(--ink);
 }
 .rsvp__status--error {

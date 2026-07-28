@@ -277,7 +277,7 @@ onBeforeUnmount(() => {
 }
 .hero__hostsLabel {
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 0.3em;
   padding-left: 0.3em;
   text-transform: uppercase;
@@ -286,7 +286,7 @@ onBeforeUnmount(() => {
 .hero__hostsNames {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 26px;
+  font-size: 29px;
   color: var(--ink);
   text-shadow: 0 2px 6px rgba(255, 255, 255, 0.6);
 }
@@ -294,7 +294,7 @@ onBeforeUnmount(() => {
 .hero__kicker {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 22px;
+  font-size: 24px;
   line-height: 1.2;
   color: rgba(42, 50, 54, 0.78);
   text-shadow: 0 2px 6px rgba(255, 255, 255, 0.6);
@@ -305,7 +305,7 @@ onBeforeUnmount(() => {
   padding-bottom: 42%;
 }
 .hero__content--solo .hero__kicker {
-  font-size: 40px;
+  font-size: 43px;
   letter-spacing: 0.04em;
 }
 
@@ -339,7 +339,7 @@ onBeforeUnmount(() => {
   margin-top: 22px;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 52px;
+  font-size: 58px;
   line-height: 0.95;
   letter-spacing: 0.04em;
   color: var(--ink);
@@ -351,9 +351,30 @@ onBeforeUnmount(() => {
 
 .hero__amp {
   font-family: var(--font-display);
-  font-size: 30px;
+  font-size: 33px;
   color: rgba(42, 50, 54, 0.4);
   margin: 2px 0;
+}
+
+/* Одно имя (қыз ұзату) — крупнее, чем в режиме пары */
+.hero__name--solo {
+  margin-top: 26px;
+  font-size: 78px;
+  letter-spacing: 0.05em;
+}
+.hero__content--solo .hero__date {
+  margin-top: 24px;
+  font-size: 15px;
+  letter-spacing: 0.5em;
+}
+/* на узких экранах чуть скромнее, чтобы имя не упёрлось в края */
+@media (max-width: 380px) {
+  .hero__name--solo {
+    font-size: 68px;
+  }
+  .hero__content--solo .hero__kicker {
+    font-size: 37px;
+  }
 }
 
 .hero__date {

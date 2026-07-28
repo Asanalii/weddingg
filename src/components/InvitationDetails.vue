@@ -49,11 +49,17 @@ const calendarCells = computed(() => {
 <template>
   <!-- Приглашение + дата + календарь + сағат (фон heritage-2) -->
   <section class="hsec" :style="{ backgroundImage: `url('${bgInvite}')` }">
-    <h2 class="hsec__title t-script invite__title" v-reveal="{ from: 'left' }">{{ title }}</h2>
+    <h2 class="hsec__title t-script invite__title" v-reveal="{ from: 'left' }">
+      {{ title }}
+    </h2>
 
-    <p class="invite__text t-body" v-reveal="{ delay: 150 }">{{ invitationText }}</p>
+    <p class="invite__text t-body" v-reveal="{ delay: 150 }">
+      {{ invitationText }}
+    </p>
 
-    <div class="invite__date t-script" v-reveal="{ from: 'right', delay: 100 }">{{ dateText }}</div>
+    <div class="invite__date t-script" v-reveal="{ from: 'right', delay: 100 }">
+      {{ dateText }}
+    </div>
 
     <!-- Календарь heritage: минималистичный, цифры каллиграфией -->
     <div class="cal" v-reveal="{ delay: 200 }">
@@ -78,20 +84,29 @@ const calendarCells = computed(() => {
           >
             <path
               d="M32 54 C 18 44, 6 35, 6 22 C 6 12, 14 6, 22 6 C 27 6, 30 9, 32 12 C 34 9, 37 6, 42 6 C 50 6, 58 12, 58 22 C 58 35, 46 44, 32 54 Z"
-              fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.4"
+              stroke-linejoin="round"
             />
           </svg>
         </div>
       </div>
     </div>
 
-    <div class="invite__time t-script" v-reveal="{ from: 'zoom', delay: 150 }">{{ timeText }}</div>
+    <div class="invite__time t-script" v-reveal="{ from: 'zoom', delay: 150 }">
+      {{ timeText }}
+    </div>
   </section>
 
   <!-- Мекен-жай (фон heritage-1) -->
   <section class="hsec" :style="{ backgroundImage: `url('${bgAddress}')` }">
-    <h2 class="hsec__title t-script addr__title" v-reveal="{ from: 'left' }">{{ locationTitle }}</h2>
-    <div class="hsec__subtitle" v-reveal="{ delay: 120 }">{{ locationSubtitle }}</div>
+    <h2 class="hsec__title t-script addr__title" v-reveal="{ from: 'left' }">
+      {{ locationTitle }}
+    </h2>
+    <div class="hsec__subtitle" v-reveal="{ delay: 120 }">
+      {{ locationSubtitle }}
+    </div>
 
     <div class="addr__lines t-body" v-reveal="{ from: 'right', delay: 180 }">
       <div>{{ locationCity }}</div>
@@ -113,17 +128,19 @@ const calendarCells = computed(() => {
 </template>
 
 <style scoped>
-.invite__title { letter-spacing: 0.16em; }
+.invite__title {
+  letter-spacing: 0.16em;
+}
 
 .invite__text {
   margin: 26px auto 0;
-  max-width: 340px;
-  font-size: 18px;
+  max-width: 350px;
+  font-size: 19px;
 }
 
 .invite__date {
   margin-top: 34px;
-  font-size: clamp(28px, 8vw, 34px);
+  font-size: clamp(31px, 8.6vw, 37px);
 }
 
 /* Календарь */
@@ -138,11 +155,12 @@ const calendarCells = computed(() => {
 }
 .cal__weekday {
   font-family: var(--font-body);
-  font-size: 13px;
+  font-weight: 600;
+  font-size: 15px;
   letter-spacing: 0.14em;
-  color: var(--ink-soft);
-  padding-bottom: 6px;
-  border-bottom: 1px solid var(--rule);
+  color: var(--ink);
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(42, 50, 54, 0.3);
 }
 .cal__days {
   display: grid;
@@ -159,16 +177,22 @@ const calendarCells = computed(() => {
 .cal__num {
   position: relative;
   z-index: 2;
-  font-family: var(--font-display);
+  /* наборный шрифт: у каллиграфического нет жирного начертания,
+     поэтому цифры получались тонкими и сливались с фоном */
+  font-family: var(--font-body);
   font-style: italic;
-  font-size: 16px;
-  color: var(--ink-soft);
+  font-weight: 600;
+  font-size: 19px;
+  color: var(--ink);
 }
-.cal__day--selected .cal__num { color: var(--ink); }
+.cal__day--selected .cal__num {
+  color: var(--ink);
+  font-weight: 700;
+}
 .cal__heart {
   position: absolute;
-  width: 130%;
-  height: 130%;
+  width: 135%;
+  height: 135%;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -178,20 +202,24 @@ const calendarCells = computed(() => {
 
 .invite__time {
   margin-top: 34px;
-  font-size: clamp(26px, 7.4vw, 32px);
+  font-size: clamp(28px, 8vw, 35px);
   letter-spacing: 0.22em;
 }
 
 /* Мекен-жай */
-.addr__title { letter-spacing: 0.2em; }
+.addr__title {
+  letter-spacing: 0.2em;
+}
 .addr__lines {
   margin-top: 26px;
-  font-size: 20px;
+  font-size: 21px;
   color: var(--ink);
   display: grid;
   gap: 12px;
 }
-.addr__hall { font-style: italic; }
+.addr__hall {
+  font-style: italic;
+}
 .addr__map {
   display: inline-block;
   margin-top: 26px;
@@ -199,10 +227,15 @@ const calendarCells = computed(() => {
   border: 1px solid var(--rule);
   border-radius: 999px;
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: 16px;
   letter-spacing: 0.08em;
   color: var(--ink-soft);
-  transition: background 0.25s, color 0.25s;
+  transition:
+    background 0.25s,
+    color 0.25s;
 }
-.addr__map:hover { background: var(--primary); color: var(--primary-ink); }
+.addr__map:hover {
+  background: var(--primary);
+  color: var(--primary-ink);
+}
 </style>
