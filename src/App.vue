@@ -20,7 +20,7 @@ const config = computed(() => getConfig(lang));
 
 <template>
   <div class="page">
-    <LangSwitcher :languages="languages" :current="lang" />
+    <!-- <LangSwitcher :languages="languages" :current="lang" /> -->
 
     <!-- Узкая колонка-открытка, как в Naz heritage -->
     <div class="sheet">
