@@ -95,7 +95,7 @@ export const configs = {
     },
     hosts: {
       label: "Той иелері:",
-      names: "Бақыт - Гуля",
+      names: "Бахыт - Гуля",
       welcome: "Сіздерді тойымызда күтеміз!",
     },
     rsvp: {
