@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Той шақыру: золотое сердце на слоновой кости (палитра сайта) -->
+  <circle cx="50" cy="50" r="47" fill="#f8f0e4"/>
+  <circle cx="50" cy="50" r="46" fill="none" stroke="#a8895a" stroke-width="1.6"/>
+  <circle cx="50" cy="50" r="41.5" fill="none" stroke="#a8895a" stroke-width="0.8"/>
+  <path d="M50 78 C33 65 20 54 20 39.5 C20 29.5 28 22.5 36 22.5 C42 22.5 47 26 50 31.5 C53 26 58 22.5 64 22.5 C72 22.5 80 29.5 80 39.5 C80 54 67 65 50 78 Z"
+        fill="none" stroke="#a8895a" stroke-width="3.4" stroke-linejoin="round"/>
+  <path d="M50 44 L52.4 49.6 L58 52 L52.4 54.4 L50 60 L47.6 54.4 L42 52 L47.6 49.6 Z" fill="#a8895a"/>
+  <path d="M22 26 L23.4 29.2 L26.6 30.6 L23.4 32 L22 35.2 L20.6 32 L17.4 30.6 L20.6 29.2 Z" fill="#a8895a" opacity="0.85"/>
+  <path d="M78 26 L79.4 29.2 L82.6 30.6 L79.4 32 L78 35.2 L76.6 32 L73.4 30.6 L76.6 29.2 Z" fill="#a8895a" opacity="0.85"/>
+</svg>
