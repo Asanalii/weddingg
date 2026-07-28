@@ -2,7 +2,58 @@
 <html lang="kk">
   <head>
     <meta charset="UTF-8" />
-    <!-- Фавиконки (лежат в /public; %BASE_URL% учитывает base из vite.config.js) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ================= SEO ================= -->
+    <title>Қыз ұзату — Назерке | 27.08.2026</title>
+    <meta
+      name="description"
+      content="Сіздерді Назеркенің ұзату тойына шақырамыз! 27 тамыз 2026, сағат 18:00. Шақыруды ашып, келетініңізді растаңыз."
+    />
+    <meta name="author" content="Назерке" />
+    <!-- Личное приглашение: если НЕ хотите, чтобы сайт находился в Google,
+         поменяйте content на "noindex, nofollow" -->
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#f8f0e4" />
+
+    <!-- ВАЖНО: замените https://asanalii.github.io/weddingg/ на реальный адрес сайта
+         (везде ниже: canonical, og:url, og:image, twitter:image).
+         Для превью в WhatsApp/Telegram ссылки должны быть АБСОЛЮТНЫМИ. -->
+    <link rel="canonical" href="https://asanalii.github.io/weddingg/" />
+
+    <!-- ============ Open Graph (WhatsApp, Telegram, Instagram) ============ -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Той шақыру" />
+    <meta property="og:title" content="Қыз ұзату — Назерке" />
+    <meta
+      property="og:description"
+      content="27 тамыз 2026, сағат 18:00 · Шақыруды ашып, келетініңізді растаңыз 💛"
+    />
+    <meta property="og:url" content="https://asanalii.github.io/weddingg/" />
+    <meta
+      property="og:image"
+      content="https://asanalii.github.io/weddingg/og-image.jpg"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:alt" content="Қыз ұзату — Назерке, 27.08.2026" />
+    <meta property="og:locale" content="kk_KZ" />
+    <meta property="og:locale:alternate" content="ru_RU" />
+
+    <!-- ============ Twitter / X ============ -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Қыз ұзату — Назерке" />
+    <meta
+      name="twitter:description"
+      content="27 тамыз 2026, сағат 18:00 · Шақыруды ашып, келетініңізді растаңыз 💛"
+    />
+    <meta
+      name="twitter:image"
+      content="https://asanalii.github.io/weddingg/og-image.jpg"
+    />
+
+    <!-- ============ Иконки ============ -->
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
     <link
       rel="icon"
@@ -22,14 +73,21 @@
       href="%BASE_URL%apple-touch-icon.png"
     />
 
+    <!-- ============ Шрифты ============ -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=DM+Mono:wght@300;400&display=swap"
       rel="stylesheet"
     />
-
+    <!-- Локальный каллиграфический шрифт грузим заранее — имя на hero появится без мигания -->
+    <link
+      rel="preload"
+      href="%BASE_URL%AsylbekM02Shelley.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <style>
       /* Локальный каллиграфический шрифт из /public */
       @font-face {
@@ -41,8 +99,29 @@
       }
     </style>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Той шақыру - Алпамыс & Арайлым</title>
+    <!-- ============ Структурированные данные (Google) ============ -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Event",
+        "name": "Қыз ұзату — Назерке",
+        "startDate": "2026-08-27T18:00:00+05:00",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "location": {
+          "@type": "Place",
+          "name": "Grand Hall",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Сырым Датов, 57",
+            "addressLocality": "Құлсары",
+            "addressCountry": "KZ"
+          }
+        },
+        "image": ["https://asanalii.github.io/weddingg/og-image.jpg"],
+        "description": "Сіздерді Назеркенің ұзату тойына шақырамыз! 27 тамыз 2026, сағат 18:00."
+      }
+    </script>
   </head>
   <body>
     <div id="app"></div>
