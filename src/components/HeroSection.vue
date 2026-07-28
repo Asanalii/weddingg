@@ -5,6 +5,8 @@ const props = defineProps({
   videoUrl: { type: String, required: true },
   posterUrl: { type: String, default: "" },
   kicker: { type: String, default: "Сіздерді тойымызға шақырамыз" },
+  hostsLabel: { type: String, default: "Той иелері:" },
+  hostsNames: { type: String, default: "" },
   coupleNames: { type: String, default: "Алпамыс & Арайлым" },
   eventIso: { type: String, required: true },
   musicUrl: { type: String, required: true },
@@ -84,7 +86,12 @@ onBeforeUnmount(() => audioElement.pause());
     ></video>
 
     <div class="hero__content" :class="{ 'hero__content--solo': !isCouple }">
-      <div class="hero__kicker" v-reveal="{ from: 'left', delay: 200 }">
+      <div v-if="hostsNames" class="hero__hosts" v-reveal="{ delay: 100 }">
+        <span class="hero__hostsLabel">{{ hostsLabel }}</span>
+        <span class="hero__hostsNames">{{ hostsNames }}</span>
+      </div>
+
+      <div class="hero__kicker" v-reveal="{ from: 'left', delay: 250 }">
         {{ kicker }}
       </div>
 
@@ -118,6 +125,11 @@ onBeforeUnmount(() => audioElement.pause());
       <div class="hero__date t-spaced" v-reveal="{ delay: 900 }">
         {{ prettyDate }}
       </div>
+    </div>
+
+    <!-- индикатор «скролль вниз» -->
+    <div class="hero__scroll" aria-hidden="true">
+      <span class="hero__scrollDot"></span>
     </div>
 
     <!-- круглая кнопка музыки, как в Naz -->
@@ -162,6 +174,30 @@ onBeforeUnmount(() => audioElement.pause());
   justify-content: center;
   padding: 44px 24px 22%;
   text-align: center;
+}
+
+/* Той иелері над kicker */
+.hero__hosts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 26px;
+}
+.hero__hostsLabel {
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  padding-left: 0.3em;
+  text-transform: uppercase;
+  color: rgba(42, 50, 54, 0.6);
+}
+.hero__hostsNames {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 26px;
+  color: var(--ink);
+  text-shadow: 0 2px 6px rgba(255, 255, 255, 0.6);
 }
 
 .hero__kicker {
@@ -231,6 +267,50 @@ onBeforeUnmount(() => audioElement.pause());
 
 .hero__date {
   margin-top: 14px;
+}
+
+/* индикатор «скролль вниз» — мышка с бегущей точкой */
+.hero__scroll {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  width: 27px;
+  height: 44px;
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+  box-shadow: 0 2px 10px rgba(42, 50, 54, 0.25);
+  pointer-events: none;
+}
+.hero__scrollDot {
+  width: 4px;
+  height: 8px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 1px 4px rgba(42, 50, 54, 0.3);
+  animation: heroScroll 1.8s ease-in-out infinite;
+}
+@keyframes heroScroll {
+  0% {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero__scrollDot {
+    animation: none;
+    opacity: 1;
+  }
 }
 
 /* круглая кнопка play внизу слева */

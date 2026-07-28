@@ -179,7 +179,7 @@ export const configs = {
     },
     hosts: {
       label: "Хозяева торжества:",
-      names: "Амандос - Айым",
+      names: "Бахыт - Гуля",
       welcome: "Ждём вас на нашем празднике!",
     },
     rsvp: {
@@ -263,7 +263,7 @@ export const configs = {
     },
     hosts: {
       label: "Hosts of the celebration:",
-      names: "Amandos - Aiym",
+      names: "Bakhyt - Gulya",
       welcome: "We look forward to seeing you!",
     },
     rsvp: {

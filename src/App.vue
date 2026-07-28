@@ -29,6 +29,8 @@ const config = computed(() => getConfig(lang));
         :poster-url="config.hero.posterUrl"
         :event-iso="config.eventDateTime"
         :kicker="config.hero.kicker"
+        :hosts-label="config.hosts.label"
+        :hosts-names="config.hosts.names"
         :couple-names="config.coupleNames"
         :music-url="config.musicUrl"
       />
