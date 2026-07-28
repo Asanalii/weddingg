@@ -147,9 +147,15 @@ const submitForm = async () => {
 
 <template>
   <section class="hsec" :style="{ backgroundImage: `url('${bg}')` }">
-    <h2 class="hsec__title t-script rsvp__title" v-reveal="{ from: 'left' }">{{ title }}</h2>
+    <h2 class="hsec__title t-script rsvp__title" v-reveal="{ from: 'left' }">
+      {{ title }}
+    </h2>
 
-    <form class="rsvp__form" v-reveal="{ delay: 150 }" @submit.prevent="submitForm">
+    <form
+      class="rsvp__form"
+      v-reveal="{ delay: 150 }"
+      @submit.prevent="submitForm"
+    >
       <label class="rfield">
         <span class="rfield__label t-body">{{ nameLabel }}</span>
         <input
@@ -192,8 +198,11 @@ const submitForm = async () => {
             <svg viewBox="0 0 12 10">
               <path
                 d="M1 5.2 4.4 8.6 11 1.4"
-                fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
               />
             </svg>
           </span>
@@ -203,11 +212,7 @@ const submitForm = async () => {
         <div v-if="notAlone" class="companions">
           <div class="companions__label">{{ withMeLabel }}</div>
 
-          <div
-            v-for="(c, i) in companions"
-            :key="i"
-            class="companions__row"
-          >
+          <div v-for="(c, i) in companions" :key="i" class="companions__row">
             <input
               v-model="companions[i]"
               class="rfield__input companions__input"
@@ -220,17 +225,38 @@ const submitForm = async () => {
               :aria-label="'remove ' + (i + 1)"
               @click="removeCompanion(i)"
             >
-              –
+              <svg viewBox="0 0 14 14" aria-hidden="true">
+                <path
+                  d="M2.5 7 H11.5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                />
+              </svg>
             </button>
           </div>
 
           <button class="companions__add" type="button" @click="addCompanion">
-            {{ addGuestText }}
+            <svg viewBox="0 0 14 14" aria-hidden="true">
+              <path
+                d="M7 2.5 V11.5 M2.5 7 H11.5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span>{{ addGuestText }}</span>
           </button>
         </div>
       </template>
 
-      <button class="rsvp__submit" type="submit" :disabled="!canSubmit || isSubmitting">
+      <button
+        class="rsvp__submit"
+        type="submit"
+        :disabled="!canSubmit || isSubmitting"
+      >
         {{ isSubmitting ? sendingText : buttonText }}
       </button>
 
@@ -243,7 +269,9 @@ const submitForm = async () => {
 </template>
 
 <style scoped>
-.rsvp__title { letter-spacing: 0.14em; }
+.rsvp__title {
+  letter-spacing: 0.14em;
+}
 
 .rsvp__form {
   margin: 30px auto 0;
@@ -253,8 +281,14 @@ const submitForm = async () => {
   gap: 18px;
 }
 
-.rfield { display: grid; gap: 10px; }
-.rfield__label { font-size: 18px; color: var(--ink); }
+.rfield {
+  display: grid;
+  gap: 10px;
+}
+.rfield__label {
+  font-size: 18px;
+  color: var(--ink);
+}
 .rfield__input {
   padding: 14px 22px;
   border: 1px solid rgba(42, 50, 54, 0.55);
@@ -266,8 +300,12 @@ const submitForm = async () => {
   transition: border-color 0.2s;
   min-width: 0;
 }
-.rfield__input::placeholder { color: var(--ink-mute); }
-.rfield__input:focus { border-color: var(--ink); }
+.rfield__input::placeholder {
+  color: var(--ink-mute);
+}
+.rfield__input:focus {
+  border-color: var(--ink);
+}
 
 .rsvp__question {
   margin-top: 6px;
@@ -275,7 +313,10 @@ const submitForm = async () => {
   color: var(--ink);
 }
 
-.radios { display: grid; gap: 14px; }
+.radios {
+  display: grid;
+  gap: 14px;
+}
 .radio {
   display: flex;
   align-items: center;
@@ -296,7 +337,9 @@ const submitForm = async () => {
   position: relative;
   transition: border-color 0.2s;
 }
-.radio--on .radio__dot { border-color: var(--ink); }
+.radio--on .radio__dot {
+  border-color: var(--ink);
+}
 .radio--on .radio__dot::after {
   content: "";
   position: absolute;
@@ -304,7 +347,10 @@ const submitForm = async () => {
   border-radius: 999px;
   background: var(--ink);
 }
-.radio__text { font-size: 18px; color: var(--ink); }
+.radio__text {
+  font-size: 18px;
+  color: var(--ink);
+}
 
 /* Чекбокс «Жалғыз келмеймін» */
 .check {
@@ -328,19 +374,31 @@ const submitForm = async () => {
   place-items: center;
   color: transparent;
   background: transparent;
-  transition: background 0.2s, border-color 0.2s;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
   flex: 0 0 auto;
 }
-.check__box svg { width: 11px; height: 9px; }
+.check__box svg {
+  width: 11px;
+  height: 9px;
+}
 .check input:checked + .check__box {
   background: var(--ink);
   border-color: var(--ink);
   color: #fff;
 }
-.check__text { font-style: italic; font-size: 16px; color: var(--ink); }
+.check__text {
+  font-style: italic;
+  font-size: 16px;
+  color: var(--ink);
+}
 
 /* Спутники */
-.companions { display: grid; gap: 12px; }
+.companions {
+  display: grid;
+  gap: 12px;
+}
 .companions__label {
   font-family: var(--font-body);
   font-size: 13px;
@@ -362,15 +420,25 @@ const submitForm = async () => {
   border: 1px solid var(--rule);
   background: rgba(255, 255, 255, 0.4);
   color: var(--ink-soft);
-  font-size: 18px;
-  line-height: 1;
   display: grid;
   place-items: center;
-  transition: background 0.2s, border-color 0.2s;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
 }
-.companions__remove:hover { background: #fff; border-color: var(--ink-mute); }
+.companions__remove:hover {
+  background: #fff;
+  border-color: var(--ink-mute);
+}
+.companions__remove svg {
+  width: 14px;
+  height: 14px;
+}
 .companions__add {
   justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   padding: 10px 18px;
   border: 1px dashed var(--ink-mute);
   border-radius: 6px;
@@ -379,9 +447,18 @@ const submitForm = async () => {
   font-size: 14px;
   letter-spacing: 0.1em;
   color: var(--ink-soft);
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
-.companions__add:hover { background: rgba(255, 255, 255, 0.5); color: var(--ink); }
+.companions__add svg {
+  width: 12px;
+  height: 12px;
+}
+.companions__add:hover {
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--ink);
+}
 
 .rsvp__submit {
   margin: 14px auto 0;
@@ -394,10 +471,17 @@ const submitForm = async () => {
   letter-spacing: 0.32em;
   padding-left: calc(34px + 0.32em);
   font-size: 15px;
-  transition: opacity 0.25s, transform 0.15s;
+  transition:
+    opacity 0.25s,
+    transform 0.15s;
 }
-.rsvp__submit:hover:not(:disabled) { transform: translateY(-1px); }
-.rsvp__submit:disabled { background: #aca7a1; opacity: 0.9; }
+.rsvp__submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+.rsvp__submit:disabled {
+  background: #aca7a1;
+  opacity: 0.9;
+}
 
 .rsvp__status {
   text-align: center;
@@ -406,5 +490,7 @@ const submitForm = async () => {
   font-size: 17px;
   color: var(--ink);
 }
-.rsvp__status--error { color: #8a2119; }
+.rsvp__status--error {
+  color: #8a2119;
+}
 </style>

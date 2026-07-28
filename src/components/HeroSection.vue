@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onBeforeUnmount, ref, watch } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 
 const props = defineProps({
   videoUrl: { type: String, required: true },
@@ -9,7 +9,8 @@ const props = defineProps({
   hostsNames: { type: String, default: "" },
   coupleNames: { type: String, default: "Алпамыс & Арайлым" },
   eventIso: { type: String, required: true },
-  musicUrl: { type: String, required: true },
+  musicUrl: { type: String, default: "" },
+  autoplay: { type: Boolean, default: true },
 });
 
 // «Алпамыс & Арайлым» -> имена в столбик; «Назерке» -> одно крупное имя
@@ -37,36 +38,106 @@ const onEnded = () => {
   v.play().catch(() => {});
 };
 
-/* ---- Музыка ---- */
+/* ============================================================
+   Музыка (логика из wedding_asan)
+
+   Браузеры не дают включить звук до первого действия пользователя:
+   play() без жеста падает с NotAllowedError. Поэтому логика такая —
+   пробуем стартовать сразу, а если браузер отказал, ждём первое
+   касание / клик / нажатие клавиши и запускаем тогда.
+   Для гостя это неотличимо от автозапуска.
+   ============================================================ */
 const isPlaying = ref(false);
-const audioElement = new Audio(props.musicUrl);
-audioElement.volume = 0.4;
+// Если гость сам поставил на паузу — больше не навязываемся
+const stoppedByUser = ref(false);
+let audioElement = null;
+
+const getAudio = () => {
+  if (!audioElement && props.musicUrl) {
+    audioElement = new Audio(props.musicUrl);
+    audioElement.loop = true;
+    audioElement.volume = 0.4;
+    audioElement.preload = "auto";
+    // Состояние кнопки держим на событиях самого аудио —
+    // тогда оно верное и при системной паузе (звонок, другая вкладка)
+    audioElement.addEventListener("play", () => (isPlaying.value = true));
+    audioElement.addEventListener("pause", () => (isPlaying.value = false));
+    audioElement.addEventListener("ended", () => (isPlaying.value = false));
+  }
+  return audioElement;
+};
+
+// Возвращает true, если воспроизведение действительно началось
+const tryPlay = async () => {
+  const audio = getAudio();
+  if (!audio || stoppedByUser.value) return false;
+  try {
+    await audio.play();
+    return true;
+  } catch {
+    return false; // NotAllowedError — ждём жеста пользователя
+  }
+};
+
+/* ---- Запуск по первому жесту ---- */
+// touchend и click дают «user activation»; touchstart в Chrome — нет
+const GESTURE_EVENTS = ["pointerdown", "touchend", "click", "keydown"];
+
+const onFirstGesture = async () => {
+  const started = await tryPlay();
+  if (started) removeGestureListeners();
+};
+
+function addGestureListeners() {
+  for (const eventName of GESTURE_EVENTS) {
+    window.addEventListener(eventName, onFirstGesture, { passive: true });
+  }
+}
+
+function removeGestureListeners() {
+  for (const eventName of GESTURE_EVENTS) {
+    window.removeEventListener(eventName, onFirstGesture);
+  }
+}
+
+onMounted(async () => {
+  if (!props.autoplay || !props.musicUrl) return;
+
+  const started = await tryPlay();
+  if (!started) addGestureListeners();
+});
 
 watch(
   () => props.musicUrl,
   (newUrl) => {
+    if (!audioElement) return;
     audioElement.pause();
     audioElement.src = newUrl;
-    isPlaying.value = false;
   },
 );
-audioElement.addEventListener("ended", () => (isPlaying.value = false));
 
 const toggleMusic = async () => {
-  if (!isPlaying.value) {
-    try {
-      await audioElement.play();
-      isPlaying.value = true;
-    } catch (error) {
-      console.error("Play blocked:", error);
-    }
+  const audio = getAudio();
+  if (!audio) return;
+
+  if (isPlaying.value) {
+    stoppedByUser.value = true;
+    removeGestureListeners();
+    audio.pause();
     return;
   }
-  audioElement.pause();
-  isPlaying.value = false;
+
+  stoppedByUser.value = false;
+  const started = await tryPlay();
+  if (!started) {
+    console.warn("Браузер заблокировал воспроизведение музыки.");
+  }
 };
 
-onBeforeUnmount(() => audioElement.pause());
+onBeforeUnmount(() => {
+  removeGestureListeners();
+  audioElement?.pause();
+});
 </script>
 
 <template>
@@ -100,7 +171,14 @@ onBeforeUnmount(() => audioElement.pause());
         aria-hidden="true"
         v-reveal="{ from: 'zoom', delay: 450 }"
       >
-        <span></span><i>✦</i><span></span>
+        <span></span>
+        <svg class="hero__ornamentGem" viewBox="0 0 20 20" aria-hidden="true">
+          <path
+            d="M10 2 L12.4 7.6 L18 10 L12.4 12.4 L10 18 L7.6 12.4 L2 10 L7.6 7.6 Z"
+            fill="currentColor"
+          />
+        </svg>
+        <span></span>
       </div>
 
       <template v-if="isCouple">
@@ -134,13 +212,26 @@ onBeforeUnmount(() => audioElement.pause());
 
     <!-- круглая кнопка музыки, как в Naz -->
     <button
+      v-if="musicUrl"
       class="hero__play"
       type="button"
       @click="toggleMusic"
       :aria-label="isPlaying ? 'Pause music' : 'Play music'"
     >
-      <span v-if="!isPlaying">▶</span>
-      <span v-else class="hero__pause">❚❚</span>
+      <svg v-if="!isPlaying" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M8 5v14l11-7z" fill="currentColor" />
+      </svg>
+      <svg v-else viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="7" y="5" width="3.4" height="14" rx="1" fill="currentColor" />
+        <rect
+          x="13.6"
+          y="5"
+          width="3.4"
+          height="14"
+          rx="1"
+          fill="currentColor"
+        />
+      </svg>
     </button>
   </section>
 </template>
@@ -237,10 +328,10 @@ onBeforeUnmount(() => audioElement.pause());
     transparent
   );
 }
-.hero__ornament i {
-  font-style: normal;
-  font-size: 12px;
-  line-height: 1;
+.hero__ornamentGem {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 auto;
   opacity: 0.9;
 }
 
@@ -325,7 +416,6 @@ onBeforeUnmount(() => audioElement.pause());
   background: rgba(255, 255, 255, 0.85);
   border: 1px solid var(--rule);
   color: var(--ink);
-  font-size: 13px;
   display: grid;
   place-items: center;
   box-shadow: 0 8px 24px rgba(42, 50, 54, 0.18);
